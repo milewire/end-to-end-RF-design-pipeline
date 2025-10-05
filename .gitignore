@@ -1,3 +1,6 @@
+# .gitignore for backend and root-level ignores
+# The frontend (ui/) has its own .gitignore for Node/Next.js files
+# Never commit .env, .env.local, or secret files
 # Python
 __pycache__/
 *.py[cod]

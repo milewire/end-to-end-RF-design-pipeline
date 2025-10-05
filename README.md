@@ -277,8 +277,40 @@ Contributions are welcome! To contribute:
 
 This project is intended for educational and research purposes.
 
-## .gitignore and .venv Best Practices
+## Deploying Backend to Google Cloud Run
 
-- `.venv/`, `venv/`, and all environment variable files (e.g., `.env`, `.env.local`, `ui/.env.local`) are already listed in `.gitignore` and will not be pushed to git.
-- Never commit secrets or virtual environment folders.
-- Only use `.venv` for Python dependencies; do not place config or env files there.
+To deploy the backend (FastAPI app) to Google Cloud Run:
+
+1. **Authenticate and set your project:**
+   ```sh
+   gcloud auth login
+   gcloud config set project rf-demo-vertex
+   ```
+2. **Enable required APIs:**
+   ```sh
+   gcloud services enable serviceusage.googleapis.com
+   gcloud services enable run.googleapis.com
+   gcloud services enable containerregistry.googleapis.com
+   ```
+3. **Build and push Docker image:**
+   ```sh
+   docker build -t gcr.io/rf-demo-vertex/my-backend .
+   gcloud auth configure-docker
+   docker push gcr.io/rf-demo-vertex/my-backend
+   ```
+4. **Deploy to Cloud Run:**
+   ```sh
+   gcloud run deploy my-backend --image gcr.io/rf-demo-vertex/my-backend --platform managed --region us-central1 --allow-unauthenticated
+   ```
+5. **Copy the Cloud Run URL** and use it as your backend endpoint in the frontend (see environment variable setup below).
+
+---
+
+## .gitignore Best Practices
+
+- The root `.gitignore` covers Python, data, logs, outputs, and environment files.
+- The `ui/.gitignore` covers Node.js/Next.js build artifacts and environment files for the frontend.
+- **Never commit any `.env`, `.env.local`, or secret files.**
+- Both backend and frontend ignore their respective environment and build files.
+
+---
