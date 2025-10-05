@@ -1,0 +1,9 @@
+pandas
+numpy
+google-cloud-storage
+google-cloud-aiplatform
+# --- serving deps ---
+fastapi
+uvicorn
+joblib
+scikit-learn
